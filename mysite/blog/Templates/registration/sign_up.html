@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% load  bootstrap %}
+{% block title %}
+    Реєстрація
+{% endblock title %}
+{% block content %}
+    <div class="container text-center sign-in">
+        {% if user_form.errors %}
+            <p>Данні не коректні</p>
+        {% else %}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Заповніть форму реєстрації
+            </h1>
+        {% endif %}
+        <form action="" class="form-sign-in login-form" method="post">
+            {{ user_form.username|bootstrap }}
+            {{ user_form.email|bootstrap }}
+            {{ user_form.password|bootstrap }}
+            {{ user_form.first_name|bootstrap }}
+            {{ user_form.last_name|bootstrap }}
+            {% csrf_token %}
+            <button class="btn btn-lg btn-primary mt-2" type="submit">
+                Зареєструватися
+            </button>
+        </form>
+        <a href="{% url 'blog:login' %}">У мене вже є профіль </a>
+    </div>
+{% endblock content %}

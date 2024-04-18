@@ -1,5 +1,6 @@
 from django.db import models
 from django.db import models
+from slugify import slugify
 
 # Create your models here.
 
@@ -58,3 +59,8 @@ class Comment(models.Model):
 
     def str(self):
         return 'Комментарий написан {} о {}'.format(self.name, self.post)
+
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        return super(Post, self).save(*args, **kwargs)

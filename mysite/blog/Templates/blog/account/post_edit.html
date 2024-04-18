@@ -1,0 +1,46 @@
+{% extends 'blog/base_account.html' %}
+{% load  bootstrap %}
+{% block title %}
+    Редагувати пост
+{% endblock %}
+{% block account_content %}
+    <div class="container text-center sign-in">
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+            <p>Щось забув</p>
+            <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
+                {{ form.title|bootstrap }}
+                {{ form.short_description|bootstrap }}
+                {{ form.tags|bootstrap }}
+                {{ form.image|bootstrap }}
+                {% csrf_token %}
+                <button class="btn btn-lg btn-primary mt-2" type="submit">
+                    Зберегти зміни
+                </button>
+            </form>
+        {% elif form.is_valid %}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Пост успішно змінено
+            </h1>
+            <h2 class="mb-3 font-weight-normal">
+                Ви можете:
+            </h2>
+            <a href="{% url 'blog:dashboard' %}" class="btn btn-dark">Повернутися до списку постів</a>
+            <a href="{% url 'blog:post_edit' post.id %} " class="btn btn-primary">Редагувати пост</a>
+        {% else %}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Заповніть поля
+            </h1>
+            <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
+                {{ form.title|bootstrap }}
+                {{ form.short_description|bootstrap }}
+                {{ form.tags|bootstrap }}
+                {{ form.image|bootstrap }}
+                {% csrf_token %}
+                <button class="btn btn-lg btn-primary mt-2" type="submit">
+                    Сохранить изменения
+                </button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

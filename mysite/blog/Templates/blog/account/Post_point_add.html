@@ -1,0 +1,47 @@
+{% extends 'blog/base_account.html' %}
+{% load  bootstrap %}
+{% block title %}
+    Додати пункт поста
+{% endblock %}
+{% block account_content %}
+    <div class="container text-center sign-in">
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+            <p>Щось забули</p>
+            <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
+                {{ form.post_header|bootstrap }}
+                {{ form.post_point_text|bootstrap }}
+                {{ form.post_images|bootstrap }}
+                {% csrf_token %}
+                <button class="btn btn-lg btn-primary mt-2" type="submit">
+                    Додати пункт поста
+                </button>
+            </form>
+        {% elif form.is_valid %}
+            <h1 class="h3 mb-3 font-weight-normal">
+               Пункт поста добавлен
+            </h1>
+            <h2 class="mb-3 font-weight-normal">
+                Ви можете:
+            </h2>
+            <a href="{% url 'blog:post_point_list' post.id %}" class="btn btn-dark">Повернутися до списку пунктів</a>
+            <a href="{% url 'blog:post_point_add' post.id %}" class="btn btn-primary">Додати новий пункт поста</a>
+        {% else %}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Заповніть поля
+            </h1>
+            <form action="." class="form-sign-in login-form"
+              method="post" enctype="multipart/form-data">
+            {{ form.post_header|bootstrap }}
+            {{ form.post_point_text|bootstrap }}
+            {{ form.post_images|bootstrap }}
+
+            {% csrf_token %}
+            <button class="btn btn-lg btn-primary mt-2" type="submit">
+                Додати пункт поста
+            </button>
+        </form>
+        {% endif %}
+
+    </div>
+{% endblock %}
